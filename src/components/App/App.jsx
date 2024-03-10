@@ -8,6 +8,7 @@ import contacts from '../../contacts.json';
 import css from './App.module.css';
 
 class App extends Component {
+  
   state = {
     contacts: contacts,
     filter: '',
