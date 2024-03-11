@@ -8,7 +8,6 @@ import contacts from '../../contacts.json';
 import css from './App.module.css';
 
 class App extends Component {
-  
   state = {
     contacts: contacts,
     filter: '',
@@ -20,21 +19,22 @@ class App extends Component {
       name: name,
       number: number,
     };
-    const contactNames = [];
-    this.state.contacts.map(contact => contactNames.push(contact.name));
+    const isExist = this.state.contacts.find(
+      contact => contact.name.trim().toLowerCase() === name.trim().toLowerCase()
+    );
 
-    if (contactNames.includes(name)) {
+    if (isExist) {
       alert(`${name} is already in contacts`);
+      return;
     }
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
     }));
   };
 
-  deleteContact = e => {
-    const contactId = e.target.id;
+  deleteContact = id => {
     this.setState(({ contacts }) => ({
-      contacts: contacts.filter(contact => contact.id !== contactId),
+      contacts: contacts.filter(contact => contact.id !== id),
     }));
   };
 
@@ -55,8 +55,9 @@ class App extends Component {
           filterChangeHandler={this.handleFilterChange}
         />
         <ContactList
-          contacts={this.state.contacts}
-          query={this.state.filter}
+          contacts={contacts.filter(contact =>
+            contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+          )}
           onDeleteContact={this.deleteContact}
         />
       </main>
