@@ -55,7 +55,7 @@ class App extends Component {
           filterChangeHandler={this.handleFilterChange}
         />
         <ContactList
-          contacts={contacts.filter(contact =>
+          contacts={this.state.contacts.filter(contact =>
             contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
           )}
           onDeleteContact={this.deleteContact}
